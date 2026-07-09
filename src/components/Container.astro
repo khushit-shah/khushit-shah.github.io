@@ -1,7 +1,16 @@
 ---
+type Props = {
+  surface?: boolean;
+};
 
+const { surface = true } = Astro.props;
 ---
 
-<div class="mx-auto max-w-screen-sm px-5">
+<div
+  class:list={[
+    "mx-auto w-full px-5 lg:w-[80vw]",
+    surface && "lg:rounded-lg lg:bg-stone-50/75 lg:px-8 lg:py-8 lg:shadow-[0_24px_80px_-48px_rgba(0,0,0,0.35)] lg:ring-1 lg:ring-black/5 lg:backdrop-blur-sm dark:lg:bg-stone-950/25 dark:lg:shadow-[0_24px_80px_-48px_rgba(0,0,0,0.7)] dark:lg:ring-white/10",
+  ]}
+>
   <slot />
 </div>
