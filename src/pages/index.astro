@@ -48,34 +48,30 @@ const work = await Promise.all(
             Hi, I'm Khushit <span class="text-xl">👋🏻</span>
           </h4>
           <p class="animate">
-            I am a minimal, seo friendly, accessible portfolio and blog for developers.
-            I am an even more lightweight version of my popular theme
-            <Link href="https://github.com/markhorn-dev/astro-sphere" aria-label="Astro Sphere on Github" external>
-              Astro Sphere
-            </Link>.
-            I have a lighthouse scores of 100 across the board for performance,
-            accesibility, best practices and SEO.
+            I build systems software across virtualization, kernel work, compiler infrastructure,
+            and performance analysis. Most recently I have been working on Linux and QEMU upstream
+            contributions at Nutanix.
           </p>
           <p class="animate">
-            I come packed with full type safety, a sitemap, an rss feed, markdown
-            and mdx support (use components in your markdown) through astro integrations.
-            I am styled with tailwind and come preconfigured with light, dark and
-            system/os theme preferences out of the box.
+            Earlier work includes forward-buy modeling at Salesforce, GPU memory system research,
+            MLIR-based compiler work, static analysis, and CUDA optimization.
           </p>
           <p class="animate">
-            Visit
-            <Link href="https://github.com/markhorn-dev/astro-nano" aria-label="Astro Nano on Github" external>
-              Astro Nano on Github
-            </Link>
-            to fork the repository, read the docs or one-click deploy on Vercel or Netlify.
+            Reach out if you want to talk about kernel debugging, virtualization, compilers, or
+            performance engineering.
           </p>
+          <div class="animate flex flex-wrap gap-3 pt-2">
+            <a href="/resume.pdf" download class="inline-flex items-center rounded border border-black/15 px-4 py-2 text-sm font-medium text-black transition-colors duration-300 ease-in-out hover:bg-black/5 dark:border-white/20 dark:text-white dark:hover:bg-white/5">
+              Resume PDF
+            </a>
+          </div>
         </article>
       </section>
 
       <section class="animate space-y-6">
         <div class="flex flex-wrap gap-y-2 items-center justify-between">
           <h5 class="font-semibold text-black dark:text-white">
-            Latest posts
+            {blog.length === 1 ? "Latest post" : "Latest posts"}
           </h5>
           <Link href="/blog">
             See all posts
@@ -143,8 +139,7 @@ const work = await Promise.all(
         </h5>
         <article>
           <p>
-            If you want to get in touch with me about something or just to say hi,
-            reach out on social media or send me an email.
+            Reach out on social media or send an email.
           </p>
         </article>
         <ul class="flex flex-wrap gap-2">
@@ -159,6 +154,11 @@ const work = await Promise.all(
           <li class="line-clamp-1">
             <Link href={`mailto:${SITE.EMAIL}`} aria-label={`Email ${SITE.NAME}`}>
               {SITE.EMAIL}
+            </Link>
+          </li>
+          <li class="line-clamp-1">
+            <Link href="mailto:khushits@iisc.ac.in" aria-label="Email Khushit Shah at IISc">
+              khushits@iisc.ac.in
             </Link>
           </li>
         </ul>

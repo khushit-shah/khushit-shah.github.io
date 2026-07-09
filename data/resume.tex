@@ -1,0 +1,264 @@
+%-------------------------
+% Resume in Latex
+% Author : Matty
+% Based on: https://github.com/jakegut/resume (which was itself based on https://github.com/sb2nov/resume)
+% License : MIT
+%------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{fontawesome5}
+
+\input{glyphtounicode}
+
+% -------------------- FONT OPTIONS --------------------
+% sans-serif
+% \usepackage[sfdefault]{roboto}
+% \usepackage[sfdefault]{noto-sans}
+% serif
+% \usepackage{charter}
+
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-1in} % Default was -.5in
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Section formatting
+\titleformat{\section}{
+  \vspace{-5pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+% Subsection formatting
+\titleformat{\subsection}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{\hspace{-.15in}}{0em}{}[\color{black}\vspace{-8pt}]
+
+% Ensure that generate pdf is machine readable/ATS parsable
+\pdfgentounicode=1
+
+% -------------------- CUSTOM COMMANDS --------------------
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\setlength{\footskip}{4.08003pt}
+
+% -------------------- START OF DOCUMENT --------------------
+\begin{document}
+
+% -------------------- HEADING--------------------
+\begin{flushright}
+  % \vspace{-4pt}
+  \color{gray}
+  \item
+  % Last Updated on January12 17th, 2024
+\end{flushright}
+
+\vspace{-5pt}
+
+\begin{center}
+    \textbf{\Huge \scshape Khushit Shah} \\ \vspace{8pt}
+    \small 
+    \faIcon{github}
+    \href{https://github.com/khushit-shah}{\underline{khushit-shah}} $  $
+    \small 
+    \faIcon{linkedin}
+    \href{https://www.linkedin.com/in/khushit-shah/}{\underline{khushit-shah}} $  $
+    \small 
+    \faIcon{stack-overflow}  
+    \href{https://stackoverflow.com/users/8187731/khushit-shah}{\underline{khushit-shah}} $ $
+    \faIcon{envelope}
+    \href{mailto:khushits@iisc.ac.in}
+    {\underline{khushits@iisc.ac.in}}, $ $ 
+    \href{mailto:khushitshah77@gmail.com}
+    {\underline{khushitshah77@gmail.com}} $ $
+    \faIcon{mobile}
+    {\underline{+91 9016627807}} $ $ 
+
+\end{center}
+
+% -------------------- EDUCATION --------------------
+\section{Education}
+  \resumeSubHeadingListStart
+  
+    \resumeSubheading
+      {Indian Institute of Science}{June 2025}
+      {M. Tech., Computer Science and Automation} {GPA: 9/10}
+      \resumeItemListStart
+            \resumeItem{\textbf{Relevant Courses}: High-Performance Computer Architecture (10/10), Compiler Design (10/10), Graphics and Visualization (10/10), Computer Security (10/10),
+            Program Analysis and Verification (10/10), Design and Analysis of Algorithms (9/10), Operating Systems (8/10)}
+          \resumeItemListEnd
+
+    \resumeSubheading
+      {Dharmsinh Desai University}{April 2023}
+      {B. Tech., Information Technology} {GPA: 9.2/10}
+      
+    % \resumeSubheading
+      % {Gujarat Technological University} {May 2020}
+      % {Diploma, Computer Engineering} {GPA: 10/10}
+
+  \resumeSubHeadingListEnd
+
+% -------------------- SKILLS --------------------
+%\section{Skills}
+% \begin{itemize}[leftmargin=0.15in, label={}]
+%    \small{\item{
+    
+%     \textbf{Languages}{: C/C++, Python, Java, JavaScript/TypeScript, HTML/CSS, \LaTeX} \\
+     
+%     \textbf{Tools}{: Git/GitHub, Unix Shell, Webpack, VS Code, IntelliJ CLion/PyCharm/IDEA, Atom}
+     
+     % \textbf{Frameworks}{: React, Node.js, Flask, JUnit, WordPress, Material-UI, FastAPI} \\
+     
+     % \textbf{Libraries}{: pandas, NumPy, Matplotlib}
+     
+%    }}
+% \end{itemize}
+
+% -------------------- PROJECTS --------------------
+\section{Experience}
+    \resumeSubHeadingListStart
+          \resumeProjectHeading
+{\textbf{Nutanix}  $|$ \footnotesize\emph{MTS - 2}}{June 2025 – Present}
+\resumeItemListStart
+\resumeItem{Root-caused and fixed a \textbf{complex KVM} split irqchip \textbf{issue} affecting guest EOI handling; contributed the fix \textbf{upstream} to the \textbf{Linux} kernel\textsuperscript{\href{https://github.com/torvalds/linux/commit/6517dfbcc918f970a928d9dc17586904bac06893}{[1]}}.}
+
+\resumeItem{\textbf{Designed }and \textbf{implemented} the ARM named CPU model framework for Nutanix virtualization platforms and actively led its upstreaming efforts to QEMU\textsuperscript{\href{https://lore.kernel.org/qemu-arm/20260513163356.3033159-1-shaju.abraham@nutanix.com/}{[2]}}.}    
+    \resumeItem{Drove virtualization enablement for next-generation Intel and AMD server platforms (Granite Rapids and Turin), including CPU feature support, validation, and performance evaluation.}
+\resumeItemListEnd
+
+          \resumeProjectHeading
+{\textbf{Salesforce}  $|$ \footnotesize\emph{Intern}}{May 2024 – July 2024}
+\resumeItemListStart
+    \resumeItem{Developed models to identify and quantify forward-buy effects in historical sales data.}
+    \resumeItem{Generated \textbf{100K weeks} of synthetic sales data to overcome feature gaps in real sales data.}
+    \resumeItem{Achieved \textbf{75\%} precision and recall, with a mean absolute error (\textbf{MAE}) of \textbf{0.91} on synthetic test data.}
+\resumeItemListEnd
+          % \resumeProjectHeading
+          % {\textbf{GoClasses}\vspace{8pt} $|$ \footnotesize\emph{Tutor}}{May 2023 -- Jan 2024}
+          % \small{Recorded Data Structures and Algorithms educational videos for Computer Science related competitive exams.}
+
+\resumeSubHeadingListEnd
+
+\section{Projects/Publications}
+\resumeSubHeadingListStart
+\resumeProjectHeading
+{\textbf{Optimizing GPU memory over-subscription} $|$ \footnotesize\emph{\textbf{C/C++, Linux Driver, eBPF, NVIDIA GPUs, Git}}}{Nov 2024 - June 2025}
+\resumeItemListStart
+    % \resumeItem{Conducted at \textbf{Computer Systems Lab, IISc} under Prof. Arkaprava Basu.}
+    \resumeItem{Improved visibility into NVIDIA GPU memory access patterns using advanced monitoring techniques.}
+    \resumeItem{Modified NVIDIA GPU driver to enable dynamic and customizable eviction policy selection.}
+    \resumeItem{Optimized eviction count and execution time for certain applications, achieving over \textbf{50\%} improvement.}
+    \resumeItem{\textbf{Publication: ISCA 2026 (2\textsuperscript{nd} author)}, \href{https://drive.google.com/file/d/1HoUE_EOlGEC6pftPqabvU2L5ShpClVFo/view?usp=sharing}{\textbf{\underline{Paper link}.}}}
+\resumeItemListEnd
+       
+\resumeProjectHeading
+{\textbf{mlir-pandas} $|$ \footnotesize\emph{\textbf{C/C++, MLIR, Compilers, Git}}}{Feb 2024 – Apr 2024}
+\resumeItemListStart
+    \resumeItem{Developed a custom MLIR dialect to implement 10 core Pandas operations.}
+    \resumeItem{Lowered to parallelized LLVM IR, incorporating operator fusion and data flow optimizations for efficiency.}
+    \resumeItem{Achieved a \textbf{3\%} performance gain on a subset of TPC-H queries over Pandas’ Python implementation.}
+\resumeItemListEnd
+
+          
+\resumeProjectHeading
+{\textbf{PointsTo Analysis for Static Java Programs} $|$ \footnotesize\emph{\textbf{Java, Soot, Git, Static Analysis}}}{Oct 2023 – Dec 2023}
+\resumeItemListStart
+    \resumeItem{Implemented PointsTo analysis at every program point in multi-procedural static Java programs using the bounded call-strings approach for inter-procedural analysis.}
+    \resumeItem{Handled complex cases involving reachable and unreachable infinite recursions.}
+\resumeItemListEnd
+
+\resumeProjectHeading
+{\textbf{Optimizing Dilated Convolution} $|$ \footnotesize\emph{\textbf{C/C++, CUDA, pthreads, SIMD, Optimization}}}{Oct 2023 – Nov 2023}
+\resumeItemListStart
+    \resumeItem{Achieved \textbf{10x} speedup in single-threaded performance using SIMD, loop-unrolling, and optimized memory access.}
+    \resumeItem{Implemented multi-threading with pthreads, further improving performance by \textbf{60x}.}
+    \resumeItem{Designed and optimized a CUDA implementation, achieving a \textbf{1300x} speedup.}
+\resumeItemListEnd
+
+      % \resumeProjectHeading
+      %   {\textbf{WriteIt.js} $|$ \footnotesize\emph{JavaScript, DOM}}{}
+      %   \resumeItemListStart
+      %       \resumeItem{Built lightweight, attribute-based javascript library for typewriting effects.}
+      %       \resumeItem{repo: \href{https://github.com/khushit-shah/WriteIt.js}{\underline{https://github.com/khushit-shah/WriteIt.js}}, 25+ stars on github.}
+      %   \resumeItemListEnd
+          
+% \resumeProjectHeading
+% {\textbf{SuperChessEngine} $|$ \footnotesize\emph{\textbf{C/C++, Neural Networks, Algorithms}}}{}
+% \resumeItemListStart
+%     \resumeItem{Developed a UCI-compatible chess engine integrating neural networks for move ordering and static board evaluation alongside minimax with alpha-beta pruning search.}
+%     \resumeItem{Optimized performance using lazy-SMP, iterative deepening, history heuristics, killer moves, and transposition tables, achieving \textbf{1.5K nodes per second} on CPU.}
+% \resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+% -------------------- EXPERIENCE --------------------
+
+\section{Awards \& Achievements }          
+    \resumeItemListStart
+        \resumeItem{\textbf{AIR 11 out of 75,000+ candidates in GATE CS 2023.}}
+        \resumeItem{\textbf{Top 3 in M.Tech (CSA), IISc (Class Strength: 75+).}}
+        \resumeItem{\textbf{Gold Medalist in B.Tech (Top 1 out of 150 students).}}
+    \resumeItemListEnd
+
+
+\end{document}
+

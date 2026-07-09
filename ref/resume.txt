@@ -1,0 +1,66 @@
+Khushit Shah
+§ khushit-shah ï khushit-shah j khushit-shah # khushits@iisc.ac.in, khushitshah77@gmail.com H +91 9016627807
+
+Education
+Indian Institute of Science
+
+June 2025
+
+M. Tech., Computer Science and Automation
+GPA: 9/10
+• Relevant Courses: High-Performance Computer Architecture (10/10), Compiler Design (10/10), Graphics and
+Visualization (10/10), Computer Security (10/10), Program Analysis and Verification (10/10), Design and Analysis
+of Algorithms (9/10), Operating Systems (8/10)
+
+Dharmsinh Desai University
+
+April 2023
+
+B. Tech., Information Technology
+
+GPA: 9.2/10
+
+Experience
+Nutanix | MTS - 2
+June 2025 – Present
+• Root-caused and fixed a complex KVM split irqchip issue affecting guest EOI handling; contributed the fix
+upstream to the Linux kernel[1] .
+• Designed and implemented the ARM named CPU model framework for Nutanix virtualization platforms and
+actively led its upstreaming efforts to QEMU[2] .
+• Drove virtualization enablement for next-generation Intel and AMD server platforms (Granite Rapids and Turin),
+including CPU feature support, validation, and performance evaluation.
+Salesforce | Intern
+May 2024 – July 2024
+• Developed models to identify and quantify forward-buy effects in historical sales data.
+• Generated 100K weeks of synthetic sales data to overcome feature gaps in real sales data.
+• Achieved 75% precision and recall, with a mean absolute error (MAE) of 0.91 on synthetic test data.
+
+Projects/Publications
+
+Optimizing GPU memory over-subscription | C/C++, Linux Driver, eBPF, NVIDIA GPUs, Git Nov 2024 - June 2025
+• Improved visibility into NVIDIA GPU memory access patterns using advanced monitoring techniques.
+• Modified NVIDIA GPU driver to enable dynamic and customizable eviction policy selection.
+• Optimized eviction count and execution time for certain applications, achieving over 50% improvement.
+• Publication: ISCA 2026 (2nd author), Paper link.
+mlir-pandas | C/C++, MLIR, Compilers, Git
+Feb 2024 – Apr 2024
+• Developed a custom MLIR dialect to implement 10 core Pandas operations.
+• Lowered to parallelized LLVM IR, incorporating operator fusion and data flow optimizations for efficiency.
+• Achieved a 3% performance gain on a subset of TPC-H queries over Pandas’ Python implementation.
+PointsTo Analysis for Static Java Programs | Java, Soot, Git, Static Analysis
+Oct 2023 – Dec 2023
+• Implemented PointsTo analysis at every program point in multi-procedural static Java programs using the bounded
+call-strings approach for inter-procedural analysis.
+• Handled complex cases involving reachable and unreachable infinite recursions.
+Optimizing Dilated Convolution | C/C++, CUDA, pthreads, SIMD, Optimization
+Oct 2023 – Nov 2023
+• Achieved 10x speedup in single-threaded performance using SIMD, loop-unrolling, and optimized memory access.
+• Implemented multi-threading with pthreads, further improving performance by 60x.
+• Designed and optimized a CUDA implementation, achieving a 1300x speedup.
+
+Awards & Achievements
+• AIR 11 out of 75,000+ candidates in GATE CS 2023.
+• Top 3 in M.Tech (CSA), IISc (Class Strength: 75+).
+• Gold Medalist in B.Tech (Top 1 out of 150 students).
+
+
