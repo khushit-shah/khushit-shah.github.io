@@ -6,6 +6,7 @@ import FormattedDate from "@components/FormattedDate.astro";
 import { readingTime } from "@lib/utils";
 import BackToPrev from "@components/BackToPrev.astro";
 import Link from "@components/Link.astro";
+import Giscus from "@components/Giscus.astro";
 
 export async function getStaticPaths() {
   const projects = (await getCollection("projects"))
@@ -63,5 +64,6 @@ const { Content } = await project.render();
     <article class="animate">
       <Content />
     </article>
+    <Giscus />
   </Container>
 </PageLayout>
