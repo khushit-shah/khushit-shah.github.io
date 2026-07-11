@@ -10,7 +10,7 @@ import lora400 from "@fontsource/lora/files/lora-latin-400-normal.woff2";
 import lora600 from "@fontsource/lora/files/lora-latin-600-normal.woff2";
 
 import { ClientRouter } from "astro:transitions";
-import { SITE } from "@consts";
+import { GA_MEASUREMENT_ID, SITE } from "@consts";
 
 interface Props {
   title: string;
@@ -65,55 +65,202 @@ const { title, description, image = "/nano.png" } = Astro.props;
 <link rel="alternate" type="application/rss+xml" title={SITE.NAME} href={new URL("rss.xml", Astro.site)} />
 
 <script>
-  import type { TransitionBeforeSwapEvent } from "astro:transitions/client";
-  document.addEventListener("astro:before-swap", (e) =>
-    [
-      ...(e as TransitionBeforeSwapEvent).newDocument.head.querySelectorAll(
-        "link[as=\"font\"]"
-      ),
-    ].forEach((link) => link.remove())
-  );
+import type { TransitionBeforeSwapEvent } from "astro:transitions/client";
+
+document.addEventListener("astro:before-swap", (e) =>
+  [
+    ...(e as TransitionBeforeSwapEvent).newDocument.head.querySelectorAll(
+      'link[as="font"]',
+    ),
+  ].forEach((link) => link.remove()),
+);
 </script>
 
-<script is:inline>
+<script is:inline define:vars={{ measurementId: GA_MEASUREMENT_ID }}>
+  const hasAnalytics = Boolean(measurementId);
+  const trackedScrollDepths = new Set();
+
   function init() {
     preloadTheme();
     onScroll();
     animate();
+    trackPageView();
+    attachElementHandlers();
+    bindGlobalEvents();
+    trackScrollDepth();
+  }
 
+  function attachElementHandlers() {
     const backToTop = document.getElementById("back-to-top");
-    backToTop?.addEventListener("click", (event) => scrollToTop(event));
+    if (backToTop && !backToTop.dataset.analyticsBound) {
+      backToTop.dataset.analyticsBound = "true";
+      backToTop.addEventListener("click", (event) => {
+        event.preventDefault();
+        scrollToTop(event);
+        trackEvent("back_to_top_click", {
+          element_id: "back-to-top",
+        });
+      });
+    }
 
     const backToPrev = document.getElementById("back-to-prev");
-    backToPrev?.addEventListener("click", () => window.history.back());
+    if (backToPrev && !backToPrev.dataset.analyticsBound) {
+      backToPrev.dataset.analyticsBound = "true";
+      backToPrev.addEventListener("click", (event) => {
+        event.preventDefault();
+        window.history.back();
+        trackEvent("back_to_prev_click", {
+          element_id: "back-to-prev",
+        });
+      });
+    }
 
     const lightThemeButton = document.getElementById("light-theme-button");
-    lightThemeButton?.addEventListener("click", () => {
-      localStorage.setItem("theme", "light");
-      toggleTheme(false);
-    });
+    if (lightThemeButton && !lightThemeButton.dataset.analyticsBound) {
+      lightThemeButton.dataset.analyticsBound = "true";
+      lightThemeButton.addEventListener("click", () => {
+        localStorage.setItem("theme", "light");
+        toggleTheme(false);
+        trackEvent("theme_toggle", { theme: "light" });
+      });
+    }
 
     const darkThemeButton = document.getElementById("dark-theme-button");
-    darkThemeButton?.addEventListener("click", () => {
-      localStorage.setItem("theme", "dark");
-      toggleTheme(true);
-    });
+    if (darkThemeButton && !darkThemeButton.dataset.analyticsBound) {
+      darkThemeButton.dataset.analyticsBound = "true";
+      darkThemeButton.addEventListener("click", () => {
+        localStorage.setItem("theme", "dark");
+        toggleTheme(true);
+        trackEvent("theme_toggle", { theme: "dark" });
+      });
+    }
 
     const systemThemeButton = document.getElementById("system-theme-button");
-    systemThemeButton?.addEventListener("click", () => {
-      localStorage.setItem("theme", "system");
-      toggleTheme(window.matchMedia("(prefers-color-scheme: dark)").matches);
-    });
+    if (systemThemeButton && !systemThemeButton.dataset.analyticsBound) {
+      systemThemeButton.dataset.analyticsBound = "true";
+      systemThemeButton.addEventListener("click", () => {
+        localStorage.setItem("theme", "system");
+        toggleTheme(window.matchMedia("(prefers-color-scheme: dark)").matches);
+        trackEvent("theme_toggle", { theme: "system" });
+      });
+    }
 
-    window.matchMedia("(prefers-color-scheme: dark)")
-      .addEventListener("change", event => {
-        if (localStorage.theme === "system" || !localStorage.theme) {
-          toggleTheme(event.matches);
-        }
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", event => {
+      if (localStorage.theme === "system" || !localStorage.theme) {
+        toggleTheme(event.matches);
       }
-    );
+    });
+  }
 
-    document.addEventListener("scroll", onScroll);
+  function bindGlobalEvents() {
+    if (document.documentElement.dataset.analyticsBound === "true") {
+      return;
+    }
+
+    document.documentElement.dataset.analyticsBound = "true";
+    document.addEventListener("click", handleDocumentClick);
+    document.addEventListener("scroll", handleScroll, { passive: true });
+  }
+
+  function handleDocumentClick(event) {
+    const target = event.target instanceof Element ? event.target.closest("a, button") : null;
+    if (!target) {
+      return;
+    }
+
+    const href = target.getAttribute("href");
+    const text = (target.textContent || "").trim().replace(/\s+/g, " ");
+    const ariaLabel = target.getAttribute("aria-label");
+    const id = target.id;
+
+    if (id === "back-to-top" || id === "back-to-prev" || id === "light-theme-button" || id === "dark-theme-button" || id === "system-theme-button") {
+      return;
+    }
+
+    if (href?.startsWith("mailto:")) {
+      trackEvent("email_click", {
+        link_url: href,
+        link_text: ariaLabel || text || "email",
+      });
+      return;
+    }
+
+    if (href?.startsWith("http://") || href?.startsWith("https://")) {
+      trackEvent("outbound_click", {
+        link_url: href,
+        link_text: ariaLabel || text || "external",
+      });
+      return;
+    }
+
+    if (href?.startsWith("#")) {
+      trackEvent("anchor_click", {
+        link_url: href,
+        link_text: ariaLabel || text || "anchor",
+      });
+      return;
+    }
+
+    if (target.hasAttribute("download") || href?.includes("/resume.pdf")) {
+      trackEvent("resume_download", {
+        link_url: href || "/resume.pdf",
+        link_text: ariaLabel || text || "resume",
+      });
+      return;
+    }
+
+    if (href) {
+      trackEvent("navigation_click", {
+        link_url: href,
+        link_text: ariaLabel || text || href,
+      });
+    }
+  }
+
+  function handleScroll() {
+    onScroll();
+    trackScrollDepth();
+  }
+
+  function trackPageView() {
+    if (!hasAnalytics || typeof window.gtag !== "function") {
+      return;
+    }
+
+    window.gtag("config", measurementId, {
+      page_path: window.location.pathname + window.location.search,
+      page_location: window.location.href,
+      page_title: document.title,
+    });
+  }
+
+  function trackScrollDepth() {
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const percent = scrollHeight > 0 ? Math.round((scrollTop / scrollHeight) * 100) : 0;
+    const thresholds = [25, 50, 75, 100];
+
+    thresholds.forEach((threshold) => {
+      if (percent >= threshold && !trackedScrollDepths.has(threshold)) {
+        trackedScrollDepths.add(threshold);
+        trackEvent("scroll_depth", {
+          percent: threshold,
+          page_path: window.location.pathname + window.location.search,
+        });
+      }
+    });
+  }
+
+  function trackEvent(eventName, params = {}) {
+    if (!hasAnalytics || typeof window.gtag !== "function") {
+      return;
+    }
+
+    window.gtag("event", eventName, {
+      page_path: window.location.pathname + window.location.search,
+      page_title: document.title,
+      ...params,
+    });
   }
 
   function animate() {
@@ -142,7 +289,7 @@ const { title, description, image = "/nano.png" } = Astro.props;
     });
   }
 
-function toggleTheme(dark) {
+  function toggleTheme(dark) {
     const css = document.createElement("style");
 
     css.appendChild(
@@ -166,7 +313,7 @@ function toggleTheme(dark) {
       document.documentElement.classList.remove("dark");
     }
 
-  window.getComputedStyle(css).opacity;
+    window.getComputedStyle(css).opacity;
     document.head.removeChild(css);
   }
 
@@ -184,3 +331,20 @@ function toggleTheme(dark) {
   document.addEventListener("astro:after-swap", () => init());
   preloadTheme();
 </script>
+
+{GA_MEASUREMENT_ID && (
+  <>
+    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}></script>
+    <script is:inline define:vars={{ measurementId: GA_MEASUREMENT_ID }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        window.dataLayer.push(arguments);
+      }
+
+      gtag("js", new Date());
+      gtag("config", measurementId, {
+        send_page_view: false,
+      });
+    </script>
+  </>
+)}

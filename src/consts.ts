@@ -8,6 +8,8 @@ export const SITE: Site = {
   NUM_PROJECTS_ON_HOMEPAGE: 3,
 };
 
+export const GA_MEASUREMENT_ID = "G-GDNQ0TEDQV";
+
 export const HOME: Metadata = {
   TITLE: "Home",
   DESCRIPTION:
