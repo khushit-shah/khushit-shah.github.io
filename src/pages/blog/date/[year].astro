@@ -1,0 +1,39 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import PageLayout from "@layouts/PageLayout.astro";
+import Container from "@components/Container.astro";
+import ArrowCard from "@components/ArrowCard.astro";
+
+export async function getStaticPaths() {
+  const posts = (await getCollection("blog")).filter(p => !p.data.draft);
+  const years = new Set<string>();
+  for (const p of posts) years.add(p.data.date.getFullYear().toString());
+  return Array.from(years).map(y => ({ params: { year: y } }));
+}
+
+const year = Astro.params.year;
+
+const posts = (await getCollection("blog"))
+  .filter(p => !p.data.draft)
+  .filter(p => p.data.date.getFullYear().toString() === year)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<PageLayout title={`Posts from ${year}`} description={`Blog posts from ${year}`}>
+  <Container>
+    <div class="space-y-6">
+      <div class="animate font-semibold text-black dark:text-white">{year}</div>
+      {posts.length === 0 ? (
+        <p>No posts found for {year}.</p>
+      ) : (
+        <ul class="flex flex-col gap-4">
+          {posts.map((post: CollectionEntry<"blog">) => (
+            <li>
+              <ArrowCard entry={post} />
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </Container>
+</PageLayout>
