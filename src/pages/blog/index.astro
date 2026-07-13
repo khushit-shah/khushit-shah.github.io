@@ -22,7 +22,17 @@ const posts = data.reduce((acc: Acc, post) => {
     return acc;
   }, {});
 
-const years = Object.keys(posts).sort((a, b) => parseInt(b) - parseInt(a)); 
+const years = Object.keys(posts).sort((a, b) => parseInt(b) - parseInt(a));
+
+// build tag map and sorted tag list
+const tagMap: Record<string, number> = {};
+for (const post of data) {
+  const tags = post.data.tags ?? [];
+  for (const t of tags) {
+    tagMap[t] = (tagMap[t] ?? 0) + 1;
+  }
+}
+const tags = Object.keys(tagMap).sort((a, b) => tagMap[b] - tagMap[a]); 
 ---
 
 <PageLayout title={BLOG.TITLE} description={BLOG.DESCRIPTION}>
@@ -37,6 +47,21 @@ const years = Object.keys(posts).sort((a, b) => parseInt(b) - parseInt(a));
           that explains where this section is headed.
         </p>
       </article>
+
+      {tags.length > 0 && (
+        <section class="animate">
+          <div class="font-semibold text-black dark:text-white">Tags</div>
+          <div class="flex flex-wrap gap-2 mt-2">
+            {tags.map(tag => (
+              <a href={`/blog/tags/${encodeURIComponent(tag)}`} class="px-3 py-1 rounded bg-gray-100 text-sm text-gray-800 hover:underline dark:bg-gray-800 dark:text-gray-200">
+                {tag}
+                <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">({tagMap[tag]})</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
       <div class="space-y-4">
         {years.map(year => (
           <section class="animate space-y-4">
