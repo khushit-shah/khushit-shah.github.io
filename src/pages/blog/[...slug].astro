@@ -19,6 +19,14 @@ type Props = CollectionEntry<"blog">;
 
 const post = Astro.props;
 const { Content } = await post.render();
+
+// compute tag counts for display next to tags on the post page
+const allPosts = (await getCollection("blog")).filter(p => !p.data.draft);
+const tagMap: Record<string, number> = {};
+for (const p of allPosts) {
+  const tags = p.data.tags ?? [];
+  for (const t of tags) tagMap[t] = (tagMap[t] ?? 0) + 1;
+}
 ---
 
 <PageLayout title={post.data.title} description={post.data.description}>
@@ -51,6 +59,7 @@ const { Content } = await post.render();
                 href={`/blog/tags/${encodeURIComponent(tag)}`}
               >
                 {tag}
+                <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">({tagMap[tag] ?? 0})</span>
               </a>
             ))}
           </div>

@@ -24,15 +24,23 @@ const posts = data.reduce((acc: Acc, post) => {
 
 const years = Object.keys(posts).sort((a, b) => parseInt(b) - parseInt(a));
 
-// build tag map and sorted tag list
-const tagMap: Record<string, number> = {};
+// build tag info map (count + latest date) and sorted tag list
+const tagInfo: Record<string, { count: number; latest: Date }> = {};
 for (const post of data) {
   const tags = post.data.tags ?? [];
   for (const t of tags) {
-    tagMap[t] = (tagMap[t] ?? 0) + 1;
+    if (!tagInfo[t]) tagInfo[t] = { count: 0, latest: post.data.date };
+    tagInfo[t].count++;
+    if (post.data.date.valueOf() > tagInfo[t].latest.valueOf()) tagInfo[t].latest = post.data.date;
   }
 }
-const tags = Object.keys(tagMap).sort((a, b) => tagMap[b] - tagMap[a]); 
+
+const tags = Object.keys(tagInfo)
+  .map((t) => ({ tag: t, count: tagInfo[t].count, latest: tagInfo[t].latest }))
+  .sort((a, b) => {
+    if (b.count !== a.count) return b.count - a.count; // primary: count desc
+    return b.latest.valueOf() - a.latest.valueOf(); // secondary: most recent post for that tag
+  });
 ---
 
 <PageLayout title={BLOG.TITLE} description={BLOG.DESCRIPTION}>
@@ -52,10 +60,10 @@ const tags = Object.keys(tagMap).sort((a, b) => tagMap[b] - tagMap[a]);
         <section class="animate">
           <div class="font-semibold text-black dark:text-white">Tags</div>
           <div class="flex flex-wrap gap-2 mt-2">
-            {tags.map(tag => (
+            {tags.map(({ tag, count }) => (
               <a href={`/blog/tags/${encodeURIComponent(tag)}`} class="px-3 py-1 rounded bg-gray-100 text-sm text-gray-800 hover:underline dark:bg-gray-800 dark:text-gray-200">
                 {tag}
-                <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">({tagMap[tag]})</span>
+                <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">({count})</span>
               </a>
             ))}
           </div>
