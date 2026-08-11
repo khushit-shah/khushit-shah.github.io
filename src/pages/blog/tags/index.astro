@@ -1,0 +1,41 @@
+---
+import { getCollection } from "astro:content";
+import PageLayout from "@layouts/PageLayout.astro";
+import Container from "@components/Container.astro";
+
+const data = (await getCollection("blog"))
+  .filter(post => !post.data.draft);
+
+// accumulate tag counts
+const tagMap: Record<string, number> = {};
+for (const post of data) {
+  const tags = post.data.tags ?? [];
+  for (const t of tags) {
+    tagMap[t] = (tagMap[t] ?? 0) + 1;
+  }
+}
+
+const tags = Object.keys(tagMap).sort((a, b) => tagMap[b] - tagMap[a]);
+---
+
+<PageLayout title="Tags" description="List of blog tags">
+  <Container>
+    <div class="space-y-6">
+      <div class="animate font-semibold text-black dark:text-white">Tags</div>
+      {tags.length === 0 ? (
+        <p>No tags found.</p>
+      ) : (
+        <ul class="flex flex-col gap-2">
+          {tags.map(tag => (
+            <li>
+              <a href={`/blog/tags/${encodeURIComponent(tag)}`} class="flex items-center gap-3 hover:underline">
+                <div class="font-medium">{tag}</div>
+                <div class="text-sm text-gray-600 dark:text-gray-300">{tagMap[tag]} post{tagMap[tag] === 1 ? '' : 's'}</div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </Container>
+</PageLayout>
